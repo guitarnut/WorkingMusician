@@ -1,0 +1,54 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>WorkingMusician</title>
+    <base href="/">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/foundation/6.2.3/foundation.min.css">
+    <script src="//code.jquery.com/jquery-3.1.1.min.js"
+            integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery-migrate/3.0.0/jquery-migrate.js"></script>
+    <script src="./js/js.dependencies.min.js"></script>
+</head>
+<body ng-app="WorkingMusician" ng-cloak>
+<div class="top-bar">
+    <div class="top-bar-left" ng-controller="ProfileController">
+        <ul class="dropdown menu" data-dropdown-menu>
+            <li class="menu-text">TWM</li>
+            <li><a href="#/">Home</a></li>
+            <li><a href="#">FAQ</a></li>
+            <li><a href="#">Contact</a></li>
+        </ul>
+    </div>
+    <div class="top-bar-right" ng-controller="ProfileController" ng-if="!$root.userId">
+        <ul class="menu">
+            <li ><a href="#/new">Signup</a></li>
+            <li><input type="text" placeholder="Username" ng-model="email"></li>
+            <li><input type="password" placeholder="Password" ng-model="password"></li>
+            <li>
+                <button type="button" class="button" ng-click="loginUser()">Login</button>
+            </li>
+        </ul>
+    </div>
+    <div class="top-bar-right" ng-controller="ProfileController" ng-if="$root.userId">
+        <ul class="menu">
+            <li><a href="#">{{$root.userId}}</a></li>
+            <li><a href="#/">Profile</a></li>
+            <li>
+                <button type="button" class="button" ng-click="logoutUser()">Logout</button>
+            </li>
+        </ul>
+    </div>
+</div>
+<div ng-view></div>
+
+<script src="./js/workingmusician.min.js" type="text/javascript"></script>
+<script src="//cdn.jsdelivr.net/foundation/6.2.3/foundation.min.js"></script>
+<script>
+    $(document).foundation();
+</script>
+</body>
+</html>
