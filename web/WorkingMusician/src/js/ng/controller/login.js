@@ -1,7 +1,7 @@
 /**
  * Created by guitarnut on 10/2/16.
  */
-app.controller("LoginController", ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http){
+app.controller("LoginController", ['$rootScope', '$scope', '$http', '$location', function($rootScope, $scope, $http, $location){
 
     $scope.loginUser = function() {
         var postData = {
@@ -25,6 +25,7 @@ app.controller("LoginController", ['$rootScope', '$scope', '$http', function($ro
 
     $scope.logoutUser = function() {
         $rootScope.userId = null;
+        $location.path('/');
     };
 
     $scope.createUser = function() {
@@ -44,7 +45,7 @@ app.controller("LoginController", ['$rootScope', '$scope', '$http', function($ro
             data: JSON.stringify(postData)
         }).then(function success(resp) {
             $scope.result = resp.data.message;
-            $rootScope.userId = resp.data.user.id;
+            $rootScope.userId = JSON.parse(resp.data.user)._id;
         }, function error(resp) {
             // do nothing for now
         })
@@ -56,12 +57,13 @@ app.controller("LoginController", ['$rootScope', '$scope', '$http', function($ro
     function _getProfile() {
         $http({
             method: 'GET',
-            url: '//dev.sandbox.com:8080/user'
+            url: '//dev.sandbox.com:8080/user/' + $rootScope.userId
         }).then(function success(resp) {
-            $scope.profile = resp.data.users[0];
+            return(resp.data);
         }, function error(resp) {
             // do nothing for now
         })
     }
+
 
 }]);

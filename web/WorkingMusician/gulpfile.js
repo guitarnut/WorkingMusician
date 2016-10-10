@@ -12,12 +12,12 @@ var browserify = require('browserify');
 
 
 // Define the default task that's run on `gulp`
-gulp.task('default', ['build-js', 'build-lib-js', 'build-html']);
+gulp.task('default', ['build-js', 'build-lib-js', 'build-html', 'build-html-templates']);
 
 // Configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
     gulp.watch('src/js/**/*.js',['build-js']);
-    gulp.watch('src/**/*.html', ['build-html']);
+    gulp.watch('src/**/*.html', ['build-html', 'build-html-templates']);
 });
 
 gulp.task('build-js', function() {
@@ -41,4 +41,9 @@ gulp.task('build-lib-js', function() {
 gulp.task('build-html', function() {
     return gulp.src('src/*.html')
         .pipe(gulp.dest('build/'));
+});
+
+gulp.task('build-html-templates', function() {
+    return gulp.src('src/js/ng/directive/templates/**/*.html')
+        .pipe(gulp.dest('build/templates'));
 });

@@ -1,0 +1,28 @@
+<div class="row">
+    <form ng-if = "!$root.userId">
+        <div class="row">
+            <div class="medium-4 columns">
+                <label>Email
+                    <input type="text" placeholder="Username" ng-model="$parent.email">
+                </label>
+            </div>
+            <div class="medium-4 columns">
+                <label>Password
+                    <input type="password" placeholder="Password" ng-model="$parent.password">
+                </label>
+            </div>
+            <div class="medium-4 columns">
+                <label>Password (retype)
+                    <input type="password" placeholder="Password (retype)" ng-model="$parent.passwordRetype">
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <input type="button" class="button" value="Submit" ng-click="createUser()">
+            </div>
+        </div>
+    </form>
+    <p>{{$parent.result}}</p>
+    <p ng-if = "$root.userId">You are already logged.</p>
+</div>

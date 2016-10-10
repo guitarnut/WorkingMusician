@@ -15,7 +15,7 @@
 </head>
 <body ng-app="WorkingMusician" ng-cloak>
 <div class="top-bar">
-    <div class="top-bar-left" ng-controller="ProfileController">
+    <div class="top-bar-left">
         <ul class="dropdown menu" data-dropdown-menu>
             <li class="menu-text">TWM</li>
             <li><a href="#/">Home</a></li>
@@ -23,7 +23,7 @@
             <li><a href="#">Contact</a></li>
         </ul>
     </div>
-    <div class="top-bar-right" ng-controller="ProfileController" ng-if="!$root.userId">
+    <div class="top-bar-right" ng-controller="LoginController" ng-if="!$root.userId">
         <ul class="menu">
             <li ><a href="#/new">Signup</a></li>
             <li><input type="text" placeholder="Username" ng-model="email"></li>
@@ -33,7 +33,7 @@
             </li>
         </ul>
     </div>
-    <div class="top-bar-right" ng-controller="ProfileController" ng-if="$root.userId">
+    <div class="top-bar-right" ng-controller="LoginController" ng-if="$root.userId">
         <ul class="menu">
             <li><a href="#">{{$root.userId}}</a></li>
             <li><a href="#/">Profile</a></li>

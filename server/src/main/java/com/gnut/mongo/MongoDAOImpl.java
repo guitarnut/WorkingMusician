@@ -2,14 +2,10 @@ package com.gnut.mongo;
 
 import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
-import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
-import org.bson.BsonDocument;
 import org.bson.Document;
-import org.bson.conversions.Bson;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,60 +19,57 @@ public class MongoDAOImpl implements MongoDAO {
 
     //coll.find().maxTime(1, SECONDS).count();
 
-
     public JSONArray getDocuments(String collection) {
-        MongoCursor cursor = db.getCollection(collection).find().iterator();
-        JSONArray results = new JSONArray();
-
-        try {
-            while(cursor.hasNext()) {
-                Document record = (Document) cursor.next();
-                results.put(record.toJson());
-            }
-        } finally {
-            cursor.close();
-        }
-
-        return results;
+        return saveResultsToJSONArray(db.getCollection(collection).find().iterator());
     }
 
-    public JSONObject getDocumentById(String collection, String id) {
-        MongoCursor cursor = db.getCollection(collection).find(new BasicDBObject("_id", id)).iterator();
-        JSONObject results = new JSONObject();
+    public Document getDocumentById(String collection, String id) {
+        return saveResultToDocument(db.getCollection(collection).find(new BasicDBObject("_id", id)).iterator());
+    }
 
-        try {
-            while(cursor.hasNext()) {
-                Document record = (Document) cursor.next();
-                results = new JSONObject(record.toJson());
-            }
-        } finally {
-            cursor.close();
-        }
-
-        return results;
+    public Document getDocumentByRootKey(String collection, String key, String keyValue) {
+        return saveResultToDocument(db.getCollection(collection).find(new BasicDBObject(key, keyValue)).iterator());
     }
 
     public void deleteDocumentById(String collection, String id) {
-        //db.getCollection(collection).deleteOne(new BsonDocument({"sdf":1}));
+        Document record = saveResultToDocument(db.getCollection(collection).find(new BasicDBObject("_id", id)).iterator());
+
+        if(record.containsKey("_id")) {
+            db.getCollection(collection).deleteOne(record);
+        }
     }
 
-    public String addDocument(String collection, Document document) {
-        MongoCollection coll = db.getCollection(collection);
-        coll.insertOne(document);
-        String username = document.get("username").toString();
-        MongoCursor cursor = coll.find(new BasicDBObject("username", username)).iterator();
-        String userJSON = "";
+    public void addDocument(String collection, Document document) {
+        db.getCollection(collection).insertOne(document);
+    }
+
+    private Document saveResultToDocument(MongoCursor cursor) {
+        Document record = new Document();
 
         try {
             while(cursor.hasNext()) {
-                Document record = (Document) cursor.next();
-                userJSON = record.get("_id").toString();
+                record = (Document) cursor.next();
             }
         } finally {
             cursor.close();
         }
 
-        return userJSON;
+        return record;
+    }
+
+    private JSONArray saveResultsToJSONArray(MongoCursor cursor) {
+        JSONArray records = new JSONArray();
+
+        try {
+            while(cursor.hasNext()) {
+                Document record = (Document) cursor.next();
+                records.put(record.toJson());
+            }
+        } finally {
+            cursor.close();
+        }
+
+        return records;
     }
 
 }
