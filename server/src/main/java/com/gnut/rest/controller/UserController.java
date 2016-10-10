@@ -50,7 +50,17 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
     public Map<String, Object> getUserById(@PathVariable("userId") String userId) {
         Map<String, Object> response = new LinkedHashMap<>();
-        response.put("user", mongoDAO.getDocumentById(COLLECTION, userId));
+        response.put("user", mongoDAO.getDocumentById(COLLECTION, userId).toString());
+        return response;
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
+    public Map<String, String> deleteBook(@PathVariable("userId") String userId) {
+        userRepository.delete(userId);
+        Map<String, String> response = new HashMap<String, String>();
+        response.put("message", "User deleted successfully");
+
         return response;
     }
 
@@ -112,15 +122,7 @@ public class UserController {
         return response;
     }
 
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{userId}")
-    public Map<String, String> deleteBook(@PathVariable("userId") String userId) {
-        userRepository.delete(userId);
-        Map<String, String> response = new HashMap<String, String>();
-        response.put("message", "User deleted successfully");
 
-        return response;
-    }
 
     public ModelAndView redirect() {
         ModelMap model = new ModelMap();

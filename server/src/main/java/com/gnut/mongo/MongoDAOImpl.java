@@ -5,7 +5,9 @@ import com.mongodb.MongoClient;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoCursor;
 import com.mongodb.client.MongoDatabase;
+import org.bson.BsonDocument;
 import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
@@ -39,7 +41,7 @@ public class MongoDAOImpl implements MongoDAO {
     }
 
     public JSONObject getDocumentById(String collection, String id) {
-        MongoCursor cursor = db.getCollection(collection).find(new BasicDBObject().append("_id", new BasicDBObject("$oid", id))).iterator();
+        MongoCursor cursor = db.getCollection(collection).find(new BasicDBObject("_id", id)).iterator();
         JSONObject results = new JSONObject();
 
         try {
@@ -52,6 +54,10 @@ public class MongoDAOImpl implements MongoDAO {
         }
 
         return results;
+    }
+
+    public void deleteDocumentById(String collection, String id) {
+        //db.getCollection(collection).deleteOne(new BsonDocument({"sdf":1}));
     }
 
     public String addDocument(String collection, Document document) {

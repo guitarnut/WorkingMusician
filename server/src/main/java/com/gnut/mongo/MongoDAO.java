@@ -13,5 +13,7 @@ public interface MongoDAO {
 
     JSONObject getDocumentById(String collection, String id);
 
+    void deleteDocumentById(String collection, String id);
+
     String addDocument(String collection, Document document);
 }
