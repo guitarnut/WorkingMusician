@@ -1,8 +1,10 @@
 package com.gnut.rest.controller;
 
+import com.gnut.mongo.MongoDAO;
+import com.gnut.mongo.MongoDAOImpl;
 import com.gnut.rest.model.User;
-import com.gnut.rest.repository.UserMongoRepository;
 import com.gnut.utils.SimpleMD5Encoder;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -21,8 +23,38 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final String failureMessage = "Invalid or missing parameters";
+    @Autowired
+    private MongoDAOImpl mongoDAO;
 
+    private static final String COLLECTION = "users";
+    private static final String ERROR_PARAMS = "Invalid or missing parameters";
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.POST)
+    public Map<String, Object> createUser(@RequestBody Map<String, Object> userMap) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("user", mongoDAO.addDocument(COLLECTION, User.build(userMap)));
+        response.put("message", "User created successfully");
+        return response;
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET)
+    public Map<String, Object> getAllUsers() {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("users", mongoDAO.getDocuments(COLLECTION));
+        return response;
+    }
+
+    @CrossOrigin
+    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
+    public Map<String, Object> getUserById(@PathVariable("userId") String userId) {
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("user", mongoDAO.getDocumentById(COLLECTION, userId));
+        return response;
+    }
+
+/*
     @Autowired
     UserMongoRepository userRepository;
 
@@ -64,33 +96,6 @@ public class UserController {
     }
 
     @CrossOrigin
-    @RequestMapping(method = RequestMethod.POST)
-    public Map<String, Object> createUser(@RequestBody Map<String, Object> userMap) {
-        Map<String, Object> response = new LinkedHashMap<String, Object>();
-
-        if(!validateUser(userMap, response)) {
-            return response;
-        }
-
-        User user = new User(
-                userMap.get("username").toString(),
-                encodePassword(userMap)
-        );
-
-        userRepository.save(user);
-
-        response.put("message", "User created successfully");
-        response.put("user", user);
-        return response;
-    }
-
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET, value = "/{userId}")
-    public User getUserDetails(@PathVariable("userId") String userId) {
-        return userRepository.findOne(userId);
-    }
-
-    @CrossOrigin
     @RequestMapping(method = RequestMethod.PUT, value = "/{userId}")
     public Map<String, Object> editUser(
             @PathVariable("userId") String userId,
@@ -123,16 +128,6 @@ public class UserController {
         return new ModelAndView("redirect:/404.html", model);
     }
 
-    @CrossOrigin
-    @RequestMapping(method = RequestMethod.GET)
-    public Map<String, Object> getAllUsers() {
-        List<User> users = userRepository.findAll();
-        Map<String, Object> response = new LinkedHashMap<String, Object>();
-        response.put("totalUsers", users.size());
-        response.put("users", users);
-        return response;
-    }
-
     private String encodePassword(Map<String, Object> userMap) {
         return SimpleMD5Encoder.encode(userMap.get("password").toString() + userMap.get("password").toString());
     }
@@ -146,7 +141,7 @@ public class UserController {
 
         return valid;
     }
-
+*/
 }
 
 
