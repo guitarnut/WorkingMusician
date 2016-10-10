@@ -39,7 +39,7 @@ gulp.task('build-lib-js', function() {
 });
 
 gulp.task('build-html', function() {
-    return gulp.src('src/*.html')
+    return gulp.src(['src/*.html', 'src/user/**/*.html'])
         .pipe(gulp.dest('build/'));
 });
 

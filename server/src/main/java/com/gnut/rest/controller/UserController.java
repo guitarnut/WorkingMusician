@@ -140,15 +140,6 @@ public class UserController {
         return response;
     }
 
-
-
-    public ModelAndView redirect() {
-        ModelMap model = new ModelMap();
-        model.addAttribute("attribute", "redirect");
-        return new ModelAndView("redirect:/404.html", model);
-    }
-
-
 */
 }
 

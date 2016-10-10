@@ -1,35 +1,22 @@
 package com.gnut.rest.model;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import com.gnut.utils.DocumentIDGenerator;
+import org.bson.Document;
+import org.bson.types.ObjectId;
+
+import java.util.Map;
 
 /**
  * Created by guitarnut on 10/3/16.
  */
 
-@Document(collection = "profiles")
+@org.springframework.data.mongodb.core.mapping.Document(collection = "profiles")
 public class Profile {
-    @Id
-    private String id;
-    private String userId;
-    private String firstName;
-    private String lastName;
-
-    public Profile() {
-    }
-
-    public Profile(
-            String userId,
-            String firstName,
-            String lastName
-    ) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
-    }
-
-    public void setId(String id) {
-
+    public static Document build(Map<String, Object> userMap) {
+        Document profile = new Document();
+        profile.putAll(userMap);
+        DocumentIDGenerator.appendId(profile);
+        return profile;
     }
 
 }

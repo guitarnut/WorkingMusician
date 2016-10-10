@@ -10,5 +10,8 @@ app.config(['$routeProvider', function ($routeProvider) {
         })
         .when("/new", {
             templateUrl: "newuser.html"
-        });
+        })
+        .when("/profile", {
+            templateUrl: "profile.html"
+        })
 }]);

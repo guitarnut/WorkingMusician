@@ -3,6 +3,9 @@
  */
 app.controller("LoginController", ['$rootScope', '$scope', '$http', '$location', function($rootScope, $scope, $http, $location){
 
+    // temp
+    $rootScope.userId = "57fbb8f81d50bd72f2ce5810";
+
     $scope.loginUser = function() {
         var postData = {
             username: $scope.email,
@@ -18,6 +21,7 @@ app.controller("LoginController", ['$rootScope', '$scope', '$http', '$location',
             data: JSON.stringify(postData)
         }).then(function success(resp) {
             $rootScope.userId = resp.data.id;
+            $location.path('/profile');
         }, function error(resp) {
             // do nothing for now
         })
@@ -46,6 +50,7 @@ app.controller("LoginController", ['$rootScope', '$scope', '$http', '$location',
         }).then(function success(resp) {
             $scope.result = resp.data.message;
             $rootScope.userId = JSON.parse(resp.data.user)._id;
+            $location.path('/profile');
         }, function error(resp) {
             // do nothing for now
         })

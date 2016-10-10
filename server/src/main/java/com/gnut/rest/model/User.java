@@ -13,7 +13,9 @@ import java.util.Map;
 @org.springframework.data.mongodb.core.mapping.Document(collection = "users")
 public class User {
     public static Document build(Map<String, Object> userMap) {
-        return new org.bson.Document("username", userMap.get("username").toString())
+        //Document foo = new Document();
+        //foo.putAll(userMap);
+        return new Document("username", userMap.get("username").toString())
                 .append("password", SimpleMD5Encoder.encode(userMap.get("username").toString() + userMap.get("password").toString()))
                 .append("_id", new ObjectId().toString());
     }
