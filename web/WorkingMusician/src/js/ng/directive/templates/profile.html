@@ -3,6 +3,7 @@
         <h3>Welcome back, {{profile.firstName}}</h3>
     </div>
 </div>
+<<<<<<< HEAD
 <div class="row">
     <div class="medium-8 columns">
 
@@ -12,4 +13,107 @@
         <p>{{profile.city}}, {{profile.state}}<br>
             {{profile.profession}}</p>
     </div>
+=======
+<div class="row" ng-if="!createProfile">
+    <div class="medium-8 columns">
+
+    </div>
+    <div class="medium-4 columns">
+        <p>{{profile.firstName}} {{profile.lastName}}</p>
+        <p>{{profile.city}}, {{profile.state}}<br>
+            {{profile.profession}}</p>
+    </div>
+</div>
+
+<div ng-if="createProfile">
+    <div class="row">
+        <div class="medium-12 columns">
+            <p>You'll need a profile. Lets get started!</p>
+        </div>
+
+    </div>
+    <form>
+        <div class="row">
+            <div class="large-6 columns">
+                <label>First Name
+                    <input type="text" placeholder="First Name" ng-model="profileForm.firstName">
+                </label>
+            </div>
+            <div class="large-6 columns">
+                <label>Last Name
+                    <input type="text" placeholder="Last Name" ng-model="profileForm.lastName">
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Birthdate
+                    <input type="text" placeholder="Birthdate" ng-model="profileForm.birthdate">
+                </label>
+            </div>
+            <div class="large-4 columns">
+                <label>City
+                    <input type="text" placeholder="City" ng-model="profileForm.city">
+                </label>
+            </div>
+            <div class="large-4 columns">
+                <label>State
+                    <input type="text" placeholder="State" ng-model="profileForm.state">
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <fieldset class="fieldset" id="instruments">
+                    <legend>Instruments</legend>
+                    <span ng-repeat="item in profileFormValues.instruments"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('instruments',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <fieldset class="fieldset" id="vocals">
+                    <legend>Vocals</legend>
+                    <span ng-repeat="item in profileFormValues.vocals"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('vocals',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 columns">
+                <fieldset class="fieldset" id="genres">
+                    <legend>Genres</legend>
+                    <span ng-repeat="item in profileFormValues.genres"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('genres',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                </fieldset>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-4 columns">
+                <label>Profession
+                    <select ng-model="profileForm.profession">
+                        <option ng-repeat="item in profileFormValues.profession" value="{{item.name}}">{{item.name}}</option>
+                    </select>
+                </label>
+            </div>
+            <div class="large-4 columns">
+                <label>Availability
+                    <select ng-model="profileForm.availability">
+                        <option ng-repeat="item in profileFormValues.availability" value="{{item.name}}">{{item.name}}</option>
+                    </select>
+                </label>
+            </div>
+            <div class="large-4 columns">
+                <label>Travel
+                    <select ng-model="profileForm.travel">
+                        <option ng-repeat="item in profileFormValues.travel" value="{{item.name}}">{{item.name}}</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="medium-6 columns">
+                <input type="button" class="button" value="Submit" ng-click="saveProfile()">
+            </div>
+        </div>
+    </form>
+>>>>>>> 4e5c1f2... Changed to MySQL/Hibernate
 </div>

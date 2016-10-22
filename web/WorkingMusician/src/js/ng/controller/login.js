@@ -5,8 +5,13 @@ app.controller("LoginController", [
     '$rootScope', '$scope', '$http', '$location',
     function ($rootScope, $scope, $http, $location) {
 
+<<<<<<< HEAD
         // temp
         $rootScope.userId = "19";
+=======
+    // temp
+    $rootScope.userId = "19";
+>>>>>>> 4e5c1f2... Changed to MySQL/Hibernate
 
         $scope.loginUser = function () {
             var postData = {
@@ -58,8 +63,29 @@ app.controller("LoginController", [
             })
         };
 
+<<<<<<< HEAD
         function _validateInput() {
         }
+=======
+        $http({
+            method: 'POST',
+            url: '//dev.sandbox.com:8080/user',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            data: JSON.stringify(postData)
+        }).then(function success(resp) {
+            $scope.result = resp.data.message;
+            $rootScope.userId = JSON.parse(resp.data.user).id;
+            $location.path('/profile/' + $rootScope.userId);
+        }, function error(resp) {
+            // do nothing for now
+        })
+    };
+
+    function _validateInput() {
+    }
+>>>>>>> 4e5c1f2... Changed to MySQL/Hibernate
 
         function _getProfile() {
             $http({
