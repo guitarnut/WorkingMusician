@@ -8,10 +8,16 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when("/", {
             templateUrl: "welcome.html"
         })
+        .when("/faq", {
+            templateUrl: "faq.html"
+        })
+        .when("/contact", {
+            templateUrl: "contact.html"
+        })
         .when("/new", {
             templateUrl: "newuser.html"
         })
-        .when("/profile", {
+        .when("/profile/:userId", {
             templateUrl: "profile.html"
         })
 }]);

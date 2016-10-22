@@ -1,13 +1,12 @@
 package com.gnut.rest.controller;
 
-import com.gnut.mongo.MongoDAOImpl;
-import com.gnut.rest.model.User;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gnut.rest.model.UserModel;
+import com.gnut.rest.mysql.UserDao;
 import com.gnut.utils.SimpleMD5Encoder;
-import org.bson.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -19,28 +18,36 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    @Autowired
-    private MongoDAOImpl mongoDAO;
-
-    private static final String COLLECTION = "users";
     private static final String ERROR_PARAMS = "Invalid or missing parameters";
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+    @Autowired
+    private UserDao userDao;
 
     @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
-    public Map<String, Object> createUser(@RequestBody Map<String, Object> userMap) {
-        Map<String, Object> response = new LinkedHashMap<>();
+    public Map<String, String> createUser(@RequestBody Map<String, String> userMap) {
+        Map<String, String> response = new LinkedHashMap<>();
 
         if(!validateUser(userMap, response)) {
             return response;
         }
 
-        Document user = User.build(userMap);
-        mongoDAO.addDocument(COLLECTION, user);
-        response.put("user", user.toJson());
-        response.put("message", "User created successfully");
+        String hashPassword = SimpleMD5Encoder.encode(userMap.get("password"));
+        userMap.put("password", hashPassword);
+
+        try {
+            UserModel user = mapper.convertValue(userMap, UserModel.class);
+            userDao.save(user);
+            response.put("user", mapper.writeValueAsString(user));
+            response.put("message", "UserModel created successfully");
+        } catch (Exception e) {
+            response.put("message", ERROR_PARAMS);
+        }
+
         return response;
     }
-
+/*
     @CrossOrigin
     @RequestMapping(method = RequestMethod.GET)
     public Map<String, Object> getAllUsers() {
@@ -62,7 +69,7 @@ public class UserController {
     public Map<String, String> deleteUserById(@PathVariable("userId") String userId) {
         mongoDAO.deleteDocumentById(COLLECTION, userId);
         Map<String, String> response = new HashMap<String, String>();
-        response.put("message", "User deleted successfully");
+        response.put("message", "UserModel deleted successfully");
         return response;
     }
 
@@ -105,7 +112,9 @@ public class UserController {
         return response;
     }
 
-    private Boolean validateUser(Map<String, Object> userMap, Map<String, Object> response) {
+    */
+
+    private Boolean validateUser(Map<String, String> userMap, Map<String, String> response) {
         Boolean valid = userMap.get("username") != null && userMap.get("password") != null;
 
         if(!valid) {
@@ -131,11 +140,11 @@ public class UserController {
             @PathVariable("password") String password,
             @RequestBody Map<String, Object> userMap
     ) {
-        User user = new User(username, SimpleMD5Encoder.encode(username + password));
+        UserModel user = new UserModel(username, SimpleMD5Encoder.encode(username + password));
         user.setId(userId);
 
         Map<String, Object> response = new LinkedHashMap<>();
-        response.put("message", "User Updated successfully");
+        response.put("message", "UserModel Updated successfully");
         response.put("user", userRepository.save(user));
         return response;
     }

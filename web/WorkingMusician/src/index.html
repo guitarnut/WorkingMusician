@@ -19,8 +19,8 @@
         <ul class="dropdown menu" data-dropdown-menu>
             <li class="menu-text">TWM</li>
             <li><a href="#/">Home</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Contact</a></li>
+            <li><a href="#/faq">FAQ</a></li>
+            <li><a href="#/contact">Contact</a></li>
         </ul>
     </div>
     <div class="top-bar-right" ng-controller="LoginController" ng-if="!$root.userId">
@@ -35,8 +35,7 @@
     </div>
     <div class="top-bar-right" ng-controller="LoginController" ng-if="$root.userId">
         <ul class="menu">
-            <li><a href="#">{{$root.userId}}</a></li>
-            <li><a href="#/">Profile</a></li>
+            <li><a href="#/profile/{{userId}}">Profile</a></li>
             <li>
                 <button type="button" class="button" ng-click="logoutUser()">Logout</button>
             </li>

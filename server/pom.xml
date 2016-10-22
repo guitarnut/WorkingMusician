@@ -25,14 +25,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-mongodb</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -46,9 +38,13 @@
         </dependency>
 
         <dependency>
-            <groupId>org.mongodb</groupId>
-            <artifactId>mongodb-driver</artifactId>
-            <version>3.3.0</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
         </dependency>
 
         <dependency>
@@ -79,6 +75,5 @@
             </plugin>
         </plugins>
     </build>
-
 
 </project>
