@@ -4,7 +4,7 @@ app.directive("createUser", function() {
         restrict: 'E',
         scope: {},
         controller: 'LoginController',
-        templateUrl: 'templates/createUser.html',
+        templateUrl: 'templates/createnewuser.html',
         link: function(scope, elem, attrs) {
         }
     }
