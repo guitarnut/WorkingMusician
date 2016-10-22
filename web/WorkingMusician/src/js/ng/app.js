@@ -20,4 +20,8 @@ app.config(['$routeProvider', function ($routeProvider) {
         .when("/profile/:userId", {
             templateUrl: "profile.html"
         })
+        .when("/createprofile/:userId", {
+            templateUrl: "createprofile.html"
+        })
+        .otherwise({redirectTo : '/'})
 }]);
