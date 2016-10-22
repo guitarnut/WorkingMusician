@@ -1,7 +1,5 @@
 package com.gnut.rest.model;
 
-import com.gnut.utils.SimpleMD5Encoder;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 

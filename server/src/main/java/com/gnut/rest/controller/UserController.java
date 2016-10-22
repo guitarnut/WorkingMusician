@@ -25,6 +25,30 @@ public class UserController {
     private UserDao userDao;
 
     @CrossOrigin
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public Map<String, String> loginUser(@RequestBody Map<String, String> userMap) {
+        Map<String, String> response = new LinkedHashMap<>();
+
+        if(!validateUser(userMap, response)) {
+            return response;
+        }
+
+        UserModel user = userDao.findByUsername(userMap.get("username"));
+
+        if(user != null) {
+            if(user.getPassword().equals(SimpleMD5Encoder.encode(userMap.get("password")))) {
+                response.put("id", Long.toString(user.getId()));
+            } else {
+                response.put("message", "Login failed");
+            }
+        } else {
+            response.put("message", "Username not found");
+        }
+
+        return response;
+    }
+
+    @CrossOrigin
     @RequestMapping(method = RequestMethod.POST)
     public Map<String, String> createUser(@RequestBody Map<String, String> userMap) {
         Map<String, String> response = new LinkedHashMap<>();
@@ -73,29 +97,7 @@ public class UserController {
         return response;
     }
 
-    @CrossOrigin
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Map<String, Object> loginUser(@RequestBody Map<String, Object> userMap) {
-        Map<String, Object> response = new LinkedHashMap<>();
 
-        if(!validateUser(userMap, response)) {
-            return response;
-        }
-
-        Document user = mongoDAO.getDocumentByRootKey(COLLECTION, "username", userMap.get("username").toString());
-
-        if(user.containsKey("username")) {
-            if(user.get("password").equals(encodePassword(userMap))) {
-                response.put("id", user.get("_id"));
-            } else {
-                response.put("message", "Login failed");
-            }
-        } else {
-            response.put("message", "Username not found");
-        }
-
-        return response;
-    }
 
     @CrossOrigin
     @RequestMapping(value = "/validate", method = RequestMethod.POST)

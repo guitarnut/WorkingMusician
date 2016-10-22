@@ -24,19 +24,14 @@ public class ProfileModel {
     @NotNull
     private String lastName;
 
-    @NotNull
     private String city;
 
-    @NotNull
     private String state;
 
-    @NotNull
     private String profession;
 
-    @NotNull
     private String availability;
 
-    @NotNull
     private String travel;
 
     public ProfileModel() {
@@ -44,20 +39,6 @@ public class ProfileModel {
 
     public ProfileModel(long id) {
         this.id = id;
-    }
-
-    public ProfileModel(long userId,
-                        String firstName,
-                        String lastName,
-                        String city,
-                        String state,
-                        String profession,
-                        String availability,
-                        String travel
-    ) {
-        this.userId = userId;
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public long getId() {
