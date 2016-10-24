@@ -1,0 +1,7 @@
+<div class="row" ng-controller="SearchProfilesController" ng-cloak>
+    <div class="large-12 column">
+            <h3>Musicians</h3>
+    </div>
+    <div class="large-12 column"><p ng-repeat="profile in profiles"><a href="#/viewprofile/{{profile.userId}}">View:</a> {{profile.firstName}} {{profile.lastName}}, {{profile.city}}</p></div>
+    </div>
+</div>

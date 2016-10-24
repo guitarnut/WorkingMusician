@@ -12,12 +12,13 @@ var browserify = require('browserify');
 
 
 // Define the default task that's run on `gulp`
-gulp.task('default', ['build-js', 'build-lib-js', 'build-html', 'build-html-templates']);
+gulp.task('default', ['build-js', 'build-lib-js', 'build-html', 'build-html-templates', 'build-images']);
 
 // Configure which files to watch and what tasks to use on file changes
 gulp.task('watch', function() {
     gulp.watch('src/js/**/*.js',['build-js']);
     gulp.watch('src/**/*.html', ['build-html', 'build-html-templates']);
+    gulp.watch('src/images/**/*.*', ['build-images']);
 });
 
 gulp.task('build-js', function() {
@@ -46,4 +47,9 @@ gulp.task('build-html', function() {
 gulp.task('build-html-templates', function() {
     return gulp.src('src/js/ng/directive/templates/**/*.html')
         .pipe(gulp.dest('build/templates'));
+});
+
+gulp.task('build-images', function() {
+    return gulp.src('src/images/**/*.*')
+        .pipe(gulp.dest('build/images'));
 });

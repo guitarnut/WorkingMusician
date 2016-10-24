@@ -2,11 +2,16 @@
  * Created by guitarnut on 10/2/16.
  */
 app.controller("LoginController", [
-    '$rootScope', '$scope', '$http', '$location',
-    function ($rootScope, $scope, $http, $location) {
+    '$rootScope', '$scope', '$http', '$location', '$routeParams',
+    function ($rootScope, $scope, $http, $location, $routeParams) {
 
         // temp
-        $rootScope.userId = "19";
+        //$rootScope.userId = "29";
+        $scope.validUsername = false;
+
+        if($routeParams.message === 'error') {
+            $scope.message = "You entered an incorrect username or password."
+        }
 
         $scope.loginUser = function () {
             var postData = {
@@ -22,8 +27,13 @@ app.controller("LoginController", [
                 },
                 data: JSON.stringify(postData)
             }).then(function success(resp) {
+                console.log(resp.data);
                 $rootScope.userId = resp.data.id;
-                $location.path('/profile');
+                if (!$rootScope.userId) {
+                    $location.path('/new/error');
+                } else {
+                    $location.path('/profile/' + $rootScope.userId);
+                }
             }, function error(resp) {
                 // do nothing for now
             })
@@ -31,7 +41,33 @@ app.controller("LoginController", [
 
         $scope.logoutUser = function () {
             $rootScope.userId = null;
+            $scope.profile = null;
             $location.path('/');
+        };
+
+        $scope.validateUser = function () {
+            var postData = {
+                username: $scope.email
+            };
+
+            $http({
+                method: 'POST',
+                url: '//dev.sandbox.com:8080/user/validate',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: JSON.stringify(postData)
+            }).then(function success(resp) {
+                if(resp.data.message === "true") {
+                    $scope.validUsername = true;
+                    $scope.feedback = null;
+                } else {
+                    $scope.validUsername = false;
+                    $scope.feedback = "Username already exists";
+                }
+            }, function error(resp) {
+                // do nothing for now
+            })
         };
 
         $scope.createUser = function () {
@@ -60,17 +96,5 @@ app.controller("LoginController", [
 
         function _validateInput() {
         }
-
-        function _getProfile() {
-            $http({
-                method: 'GET',
-                url: '//dev.sandbox.com:8080/user/' + $rootScope.userId
-            }).then(function success(resp) {
-                return (resp.data);
-            }, function error(resp) {
-                // do nothing for now
-            })
-        }
-
 
     }]);

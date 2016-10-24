@@ -7,6 +7,8 @@ import com.gnut.utils.SimpleMD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.gnut.rest.constants.ErrorMessages;
+
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -18,11 +20,26 @@ import java.util.Map;
 @RequestMapping("/user")
 public class UserController {
 
-    private static final String ERROR_PARAMS = "Invalid or missing parameters";
     private static final ObjectMapper mapper = new ObjectMapper();
 
     @Autowired
     private UserDao userDao;
+
+    @CrossOrigin
+    @RequestMapping(value = "/validate", method = RequestMethod.POST)
+    public Map<String, Object> isUsernameValid(@RequestBody Map<String, String> userMap) {
+        Map<String, Object> response = new LinkedHashMap<>();
+
+        UserModel user = userDao.findByUsername(userMap.get("username"));
+
+        if(user == null) {
+            response.put("message", "true");
+        } else {
+            response.put("message", "false");
+        }
+
+        return response;
+    }
 
     @CrossOrigin
     @RequestMapping(value = "/login", method = RequestMethod.POST)
@@ -66,7 +83,7 @@ public class UserController {
             response.put("user", mapper.writeValueAsString(user));
             response.put("message", "UserModel created successfully");
         } catch (Exception e) {
-            response.put("message", ERROR_PARAMS);
+            response.put("message", ErrorMessages.INVALID_PARAMETERS.toString());
         }
 
         return response;
@@ -94,23 +111,6 @@ public class UserController {
         mongoDAO.deleteDocumentById(COLLECTION, userId);
         Map<String, String> response = new HashMap<String, String>();
         response.put("message", "UserModel deleted successfully");
-        return response;
-    }
-
-
-
-    @CrossOrigin
-    @RequestMapping(value = "/validate", method = RequestMethod.POST)
-    public Map<String, Object> isUsernameValid(@RequestBody Map<String, Object> userMap) {
-        Map<String, Object> response = new LinkedHashMap<>();
-        Document user = mongoDAO.getDocumentByRootKey(COLLECTION, "username", userMap.get("username").toString());
-
-        if(!user.containsKey("username")) {
-            response.put("message", "true");
-        } else {
-            response.put("message", "false");
-        }
-
         return response;
     }
 

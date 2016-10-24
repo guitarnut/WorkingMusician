@@ -3,7 +3,6 @@
         <div class="medium-12 columns">
             <p>You'll need a profile. Lets get started!</p>
         </div>
-
     </div>
     <form>
         <div class="row">
@@ -37,47 +36,77 @@
         </div>
         <div class="row">
             <div class="large-12 columns">
+                <p>We are constantly adding talent categories. Please contact us if you feel you're not well-represented
+                    by the list below.</p>
                 <fieldset class="fieldset" id="instruments">
                     <legend>Instruments</legend>
-                    <span ng-repeat="item in profileFormValues.instruments"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('instruments',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                    <span ng-repeat="item in profileFormValues.instruments"><input id="{{item.id}}" type="checkbox"
+                                                                                   ng-click="selectOption('instruments',item)"
+                                                                                   value="{{item.name}}"><label
+                            for="{{item.id}}">{{item.name}}</label></span>
                 </fieldset>
             </div>
         </div>
         <div class="row">
             <div class="large-12 columns">
+                <p>Be honest about your vocal range so we can pair you with the correct inquiries.</p>
                 <fieldset class="fieldset" id="vocals">
                     <legend>Vocals</legend>
-                    <span ng-repeat="item in profileFormValues.vocals"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('vocals',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                    <span ng-repeat="item in profileFormValues.vocals"><input id="{{item.id}}" type="checkbox"
+                                                                              ng-click="selectOption('vocals',item)"
+                                                                              value="{{item.name}}"><label
+                            for="{{item.id}}">{{item.name}}</label></span>
                 </fieldset>
             </div>
         </div>
         <div class="row">
             <div class="large-12 columns">
+                <p>Chose the genres you feel you can perform well in a professional setting.</p>
                 <fieldset class="fieldset" id="genres">
                     <legend>Genres</legend>
-                    <span ng-repeat="item in profileFormValues.genres"><input id="{{item.id}}" type="checkbox" ng-click="selectOption('genres',item)"><label for="{{item.id}}">{{item.name}}</label></span>
+                    <span ng-repeat="item in profileFormValues.genres"><input id="{{item.id}}" type="checkbox"
+                                                                              ng-click="selectOption('genres',item)"
+                                                                              value="{{item.name}}"><label
+                            for="{{item.id}}">{{item.name}}</label></span>
                 </fieldset>
             </div>
         </div>
         <div class="row">
-            <div class="large-4 columns">
+            <div class="large-6 columns">
+                <p>How do you describe yourself? Weekend warrior, or totally committed to your craft?</p>
+            </div>
+            <div class="large-6 columns">
                 <label>Profession
                     <select ng-model="profileForm.profession">
-                        <option ng-repeat="item in profileFormValues.profession" value="{{item.name}}">{{item.name}}</option>
+                        <option ng-repeat="item in profileFormValues.profession" value="{{item.name}}">{{item.name}}
+                        </option>
                     </select>
                 </label>
             </div>
-            <div class="large-4 columns">
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <p>Be honest about your availability. We want to pair you correctly. Weekdays are considered Monday -
+                    Thursday. Weekends are considered Friday - Sunday.</p>
+            </div>
+            <div class="large-6 columns">
                 <label>Availability
                     <select ng-model="profileForm.availability">
-                        <option ng-repeat="item in profileFormValues.availability" value="{{item.name}}">{{item.name}}</option>
+                        <option ng-repeat="item in profileFormValues.availability" value="{{item.name}}">{{item.name}}
+                        </option>
                     </select>
                 </label>
             </div>
-            <div class="large-4 columns">
+        </div>
+        <div class="row">
+            <div class="large-6 columns">
+                <p>How far are you willing to travel to perform?</p>
+            </div>
+            <div class="large-6 columns">
                 <label>Travel
                     <select ng-model="profileForm.travel">
-                        <option ng-repeat="item in profileFormValues.travel" value="{{item.name}}">{{item.name}}</option>
+                        <option ng-repeat="item in profileFormValues.travel" value="{{item.name}}">{{item.name}}
+                        </option>
                     </select>
                 </label>
             </div>

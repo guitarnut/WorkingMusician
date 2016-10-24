@@ -1,0 +1,31 @@
+<div class="row" ng-controller="SearchProfilesController" ng-cloak>
+    <div class="large-12 column"><h3>{{viewprofile.firstName}} {{viewprofile.lastName}}</h3></div>
+    <div class="medium-3 column">
+        <p><strong>Located:</strong><br>
+            {{viewprofile.city}}, {{viewprofile.state}}</p>
+        <p><strong>Profession:</strong><br>
+            {{viewprofile.profession}}</p>
+        <p><strong>Availability:</strong><br>
+            {{viewprofile.availability}}</p>
+        <p><strong>Travel:</strong><br>
+            {{viewprofile.travel}}</p>
+    </div>
+    <div class="medium-3 column">
+        <h4>Genres</h4>
+        <ul ng-if="viewprofile.genres">
+            <li ng-repeat="item in viewprofile.genres">{{item.name}}</li>
+        </ul>
+    </div>
+    <div class="medium-3 column">
+        <h4>Vocals</h4>
+        <ul ng-if="viewprofile.vocals">
+            <li ng-repeat="item in viewprofile.vocals">{{item.name}}</li>
+        </ul>
+    </div>
+    <div class="medium-3 column">
+        <h4>Instruments</h4>
+        <ul ng-if="viewprofile.instruments">
+            <li ng-repeat="item in viewprofile.instruments">{{item.name}}</li>
+        </ul>
+    </div>
+</div>

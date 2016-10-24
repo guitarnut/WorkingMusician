@@ -1,15 +1,35 @@
 <div class="row">
     <div class="medium-12 columns">
-        <h3>Welcome back, {{profile.firstName}}</h3>
+        <h3>Welcome back, {{profile.firstName}}</h3><br>
     </div>
 </div>
 <div class="row">
     <div class="medium-8 columns">
-
+        Profile views: <span class="badge">{{profile.profileViews}}</span></div>
     </div>
+
     <div class="medium-4 columns">
-        <p>{{profile.firstName}} {{profile.lastName}}</p>
-        <p>{{profile.city}}, {{profile.state}}<br>
+        <img ng-src="uploads/tmpFiles/{{profile.profilePicture}}">
+        <h4>{{profile.firstName}} {{profile.lastName}}</h4>
+        <p><strong>Located:</strong><br>
+            {{profile.city}}, {{profile.state}}</p>
+        <p><strong>Profession:</strong><br>
             {{profile.profession}}</p>
+        <p><strong>Availability:</strong><br>
+            {{profile.availability}}</p>
+        <p><strong>Travel:</strong><br>
+            {{profile.travel}}</p>
+        <h4 ng-if="genres">Genres</h4>
+        <ul ng-if="genres">
+            <li ng-repeat="item in genres">{{item.name}}</li>
+        </ul>
+        <h4 ng-if="vocals">Vocals</h4>
+        <ul ng-if="vocals">
+            <li ng-repeat="item in vocals">{{item.name}}</li>
+        </ul>
+        <h4 ng-if="instruments">Instruments</h4>
+        <ul ng-if="instruments">
+            <li ng-repeat="item in instruments">{{item.name}}</li>
+        </ul>
     </div>
 </div>

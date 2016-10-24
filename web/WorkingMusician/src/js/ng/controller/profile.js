@@ -15,21 +15,22 @@ app.controller("ProfileController", [
                 url: '//dev.sandbox.com:8080/profile/' + $rootScope.userId
             }).then(function success(resp) {
                 var result = resp.data;
-                console.log(result.hasOwnProperty("profile"));
 
                 if (!result.hasOwnProperty("profile")) {
                     $location.path('/createprofile/' + $rootScope.userId);
-                    $scope.profileFormValues = profileFormValues;
                 } else {
                     $location.path('/profile/' + $rootScope.userId);
                     $scope.profile = JSON.parse(result.profile);
+                    $scope.genres = JSON.parse(result.genres);
+                    $scope.vocals = JSON.parse(result.vocals);
+                    $scope.instruments = JSON.parse(result.instruments);
                 }
             }, function error(resp) {
                 // do nothing for now
             })
         }
 
-        if (!$scope.profile && $rootScope.userId) {
+        if ($rootScope.userId) {
             _getProfile();
         } else {
             $location.path('/createprofile/' + $rootScope.userId);

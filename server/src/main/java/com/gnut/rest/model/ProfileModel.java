@@ -9,7 +9,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "profiles")
-public class ProfileModel {
+public class ProfileModel implements ProfileData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -18,21 +18,15 @@ public class ProfileModel {
     @NotNull
     private long userId;
 
-    @NotNull
     private String firstName;
-
-    @NotNull
     private String lastName;
-
     private String city;
-
     private String state;
-
     private String profession;
-
     private String availability;
-
     private String travel;
+    private String profilePicture;
+    private int profileViews;
 
     public ProfileModel() {
     }
@@ -43,6 +37,10 @@ public class ProfileModel {
 
     public long getId() {
         return this.id;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     public long getUserId() {
@@ -76,5 +74,13 @@ public class ProfileModel {
     public String getTravel() {
         return this.travel;
     }
+
+    public void setProfileViews(int profileViews) { this.profileViews = profileViews; }
+
+    public int getProfileViews() { return this.profileViews; }
+
+    public void setProfilePicture(String profilePicture) { this.profilePicture = profilePicture; }
+
+    public String getProfilePicture() { return this.profilePicture; }
 
 }

@@ -6,6 +6,7 @@ app.controller("CreateProfileController", [
     function ($rootScope, $scope, $http, $location, $routeParams) {
 
         $scope.profileForm = {};
+        $scope.profileFormValues = profileFormValues;
 
         if (!$rootScope.userId) {
             $location.path('/');
@@ -14,18 +15,27 @@ app.controller("CreateProfileController", [
         }
 
         $scope.saveProfile = function () {
-            console.log($scope.profileForm);
-
             var postData = {
-                userId: $routeParams.userId,
-                firstName: $scope.profileForm.firstName,
-                lastName: $scope.profileForm.lastName,
-                city: $scope.profileForm.city,
-                state: $scope.profileForm.state,
-                profession: $scope.profileForm.profession,
-                availability: $scope.profileForm.availability,
-                travel: $scope.profileForm.travel
+                profile: {
+                    userId: $routeParams.userId,
+                    firstName: $scope.profileForm.firstName,
+                    lastName: $scope.profileForm.lastName,
+                    city: $scope.profileForm.city,
+                    state: $scope.profileForm.state,
+                    profession: $scope.profileForm.profession,
+                    availability: $scope.profileForm.availability,
+                    travel: $scope.profileForm.travel
+                },
+                instruments: $scope.profileForm.instruments,
+                vocals: $scope.profileForm.vocals,
+                genres: $scope.profileForm.genres
             };
+
+            _removeUnwantedKeysFromArrayOfObjects(postData.instruments,$rootScope.userId);
+            _removeUnwantedKeysFromArrayOfObjects(postData.vocals,$rootScope.userId);
+            _removeUnwantedKeysFromArrayOfObjects(postData.genres,$rootScope.userId);
+
+            console.log(postData);
 
             $http({
                 method: 'POST',
@@ -35,14 +45,36 @@ app.controller("CreateProfileController", [
                 },
                 data: JSON.stringify(postData)
             }).then(function success(resp) {
-                $scope.createProfile = false;
                 $scope.result = resp.data.message;
-                $rootScope.profile = JSON.parse(resp.data.profile).id;
                 $location.path('/profile/' + $rootScope.userId);
             }, function error(resp) {
                 // do nothing for now
             })
         };
+
+        function _removeUnwantedKeysFromArrayOfObjects(array, userId) {
+            if(!array) {
+                return;
+            }
+
+            array.map(function(obj) {
+                delete obj.$$hashKey;
+                delete obj.id;
+                obj['userId'] = Number(userId);
+            })
+        }
+
+        function _findValue(category, value) {
+            var result = "";
+
+            category.map(function(item) {
+                if(item.id === value) {
+                    result = item.name
+                }
+            });
+
+            return result;
+        }
 
         $scope.selectOption = function (key, item) {
             item.selected = !item.selected;
