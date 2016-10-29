@@ -3,7 +3,7 @@ package com.gnut.rest.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gnut.rest.model.UserModel;
 import com.gnut.rest.mysql.UserDao;
-import com.gnut.utils.SimpleMD5Encoder;
+import com.gnut.encryption.SimpleMD5Encoder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

@@ -1,6 +1,7 @@
 <div class="row" ng-controller="SearchProfilesController" ng-cloak>
     <div class="large-12 column"><h3>{{viewprofile.firstName}} {{viewprofile.lastName}}</h3></div>
     <div class="medium-3 column">
+        <img ng-src="uploads/tmpFiles/{{viewprofile.profilePicture}}">
         <p><strong>Located:</strong><br>
             {{viewprofile.city}}, {{viewprofile.state}}</p>
         <p><strong>Profession:</strong><br>

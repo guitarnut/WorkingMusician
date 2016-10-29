@@ -2,7 +2,7 @@ app.directive("createUser", function() {
 
     return {
         restrict: 'E',
-        scope: {},
+        scope: true,
         controller: 'LoginController',
         templateUrl: 'templates/createnewuser.html',
         link: function(scope, elem, attrs) {

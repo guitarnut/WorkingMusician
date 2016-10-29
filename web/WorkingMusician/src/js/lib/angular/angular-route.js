@@ -243,7 +243,7 @@
          * Normalizes the given path, returning a regular expression
          * and the original path.
          *
-         * Inspired by pathRexp in visionmedia/express/lib/utils.js.
+         * Inspired by pathRexp in visionmedia/express/lib/encryption.js.
          */
         function pathRegExp(path, opts) {
             var insensitive = opts.caseInsensitiveMatch,

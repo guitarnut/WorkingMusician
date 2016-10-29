@@ -8,6 +8,8 @@ app.controller("LoginController", [
         // temp
         //$rootScope.userId = "29";
         $scope.validUsername = false;
+        $scope.username = "";
+        $scope.password = "";
 
         if($routeParams.message === 'error') {
             $scope.message = "You entered an incorrect username or password."
@@ -15,7 +17,7 @@ app.controller("LoginController", [
 
         $scope.loginUser = function () {
             var postData = {
-                username: $scope.email,
+                username: $scope.username,
                 password: $scope.password
             };
 
@@ -47,7 +49,7 @@ app.controller("LoginController", [
 
         $scope.validateUser = function () {
             var postData = {
-                username: $scope.email
+                username: $scope.username
             };
 
             $http({
@@ -74,7 +76,7 @@ app.controller("LoginController", [
             $scope.result = "Waiting...";
 
             var postData = {
-                username: $scope.email,
+                username: $scope.username,
                 password: $scope.password
             };
 

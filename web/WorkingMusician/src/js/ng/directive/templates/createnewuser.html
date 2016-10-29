@@ -4,16 +4,16 @@
         <div class="row">
             <div class="medium-4 columns">
                 <label>Email
-                    <input type="text" placeholder="Username" ng-model="$parent.email" ng-blur="validateUser()">
+                    <input type="text" placeholder="Username" ng-model="$parent.username" ng-blur="validateUser()">
                 </label>
                 <p ng-if="feedback">Username already exists.</p>
             </div>
-            <div class="medium-4 columns" ng-if="validUsername">
+            <div class="medium-4 columns">
                 <label>Password
                     <input type="password" placeholder="Password" ng-model="$parent.password">
                 </label>
             </div>
-            <div class="medium-4 columns" ng-if="validUsername">
+            <div class="medium-4 columns">
                 <label>Password (retype)
                     <input type="password" placeholder="Password (retype)" ng-model="$parent.passwordRetype">
                 </label>

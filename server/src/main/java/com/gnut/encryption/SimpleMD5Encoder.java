@@ -1,4 +1,4 @@
-package com.gnut.utils;
+package com.gnut.encryption;
 
 import org.springframework.util.DigestUtils;
 
